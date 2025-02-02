@@ -2,8 +2,8 @@
 #   `xpub6Cx5tvq6nACSLJdra1A6WjqTo1SgeUZRFqsX5ysEtVBMwhCCRa4kfgFqaT2o1kwL3esB1PsYr3CUdfRZYfLHJunNWUABKftK2NjHUtzDms2`
 #!/bin/sh
 
-#bitcoin-cli getdescriptorinfo "tr(xpub6Cx5tvq6nACSLJdra1A6WjqTo1SgeUZRFqsX5ysEtVBMwhCCRa4kfgFqaT2o1kwL3esB1PsYr3CUdfRZYfLHJunNWUABKftK2NjHUtzDms2/0/*)"
-
-#5fsaz7dh
-
-bitcoin-cli deriveaddresses "tr(xpub6Cx5tvq6nACSLJdra1A6WjqTo1SgeUZRFqsX5ysEtVBMwhCCRa4kfgFqaT2o1kwL3esB1PsYr3CUdfRZYfLHJunNWUABKftK2NjHUtzDms2/0/*)#5fsaz7dh" "[100,100]"
+EXTENDED_PUBLIC_KEY="xpub6Cx5tvq6nACSLJdra1A6WjqTo1SgeUZRFqsX5ysEtVBMwhCCRa4kfgFqaT2o1kwL3esB1PsYr3CUdfRZYfLHJunNWUABKftK2NjHUtzDms2"
+INDEX=100
+DESCRIPTOR_INDEX=$(bitcoin-cli getdescriptorinfo "tr($EXTENDED_PUBLIC_KEY/$INDEX)" | jq -r .descriptor)
+TAPROOT_ADRESS=$(bitcoin-cli deriveaddresses $DESCRIPTOR_INDEX | jq -r .[0])
+echo $TAPROOT_ADRESS
